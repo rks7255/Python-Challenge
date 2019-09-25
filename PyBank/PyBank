@@ -1,0 +1,66 @@
+import csv
+import os
+
+
+budget_csv = os.path.join("resources", "budget_data.csv")
+
+with open(budget_csv, newline="") as csvfile:
+   csvreader = csv.reader(csvfile, delimiter= ",")
+
+
+   months = []
+   revenue = []
+
+   next(csvreader, None)
+
+   for row in csvreader:
+       months.append(row[0])
+       revenue.append(int(row[1]))
+
+total_months = len(months)
+
+greatest_increase = revenue[0]
+greatest_decrease = revenue[0]
+total_revenue = 0
+
+for rev in range(len(revenue)):
+   if revenue [rev] >= greatest_increase:
+       greatest_inc = revenue[rev]
+       great_inc_month = months[rev]
+   elif revenue[rev] <= greatest_decrease:
+       greatest_dec = revenue[rev]
+       great_dec_month = months[rev]
+   total_revenue += revenue[rev]
+
+average_change = round(total_revenue/total_months, 2)
+print('Financial Analysis\n')
+print('---------------------------------------------' + '\n')
+print('Total Months: ' + str(total_months) + '\n')
+print('Total Revenue: $' + str(total_revenue) + '\n')
+print('Average Revenue Change: $' + str(average_change) + '\n')
+print('Greatest Increase in Revenue: ' + great_inc_month + ' ($' + str(greatest_inc) + ')'+ '\n')
+print('Greatest Decrease in Revenue: ' + great_dec_month + ' ($' + str(greatest_dec) + ')')
+print ("\n--------------------------------------------------")
+
+output_path = os.path.join('Resources', 'Budget_results_2.txt')
+with open(output_path, 'w') as txt:
+   txt.write('Financial Analysis\n')
+   txt.write('----------------------------' + '\n')
+   txt.write('Total Months: ' + str(total_months) + '\n')
+   txt.write('Total Revenue: $' + str(total_revenue) + '\n')
+   txt.write('Average Revenue Change: $' + str(average_change) + '\n')
+   txt.write('Greatest Increase in Revenue: ' + great_inc_month + ' ($' + str(greatest_inc) + ')'+ '\n')
+   txt.write('Greatest Decrease in Revenue: ' + great_dec_month + ' ($' + str(greatest_dec) + ')')
+
+    #Refrences and resources used 
+    #https://docs.python.org/2/library/csv.html
+    ##http://infohost.nmt.edu/tcc/help/pubs/lang/pytut27/web/str-format.html
+    #https://stackoverflow.com/questions/17262256/how-to-read-one-single-line-of-csv-data-in-python
+    #https://www.geeksforgeeks.org/python-dictionary-keys-method/
+    #May02 In class activites:
+    #Stu_Read_Netflix
+    #ReadCSV
+    #Simpleloops
+    #May04 In class Activities:
+    #StuCerealCleaner
+    #wrestlingfunctions

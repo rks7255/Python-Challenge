@@ -1,0 +1,68 @@
+import os
+import csv
+
+candidates = {}
+           
+
+election_csv = os.path.join("Resources", "election_data.csv")
+
+with open(election_csv, newline="") as csvfile:
+
+  csvreader = csv.reader (csvfile, delimiter=",")
+
+  next (csvreader)     
+
+  for row in csvreader:
+
+    if row[2] in candidates:  
+      candidates[row[2]] += 1
+
+    else:                    
+      candidates[row[2]] = 1 
+
+
+total_votes = csvreader.line_num - 1 
+
+print ("Election Resuls\n")
+print ("-------------------------------------------------\n")
+print ("Total Votes: " + str(total_votes))
+print ("\n------------------------------------------------\n")
+
+
+for key, value in candidates.items(): 
+
+  print (key + ": " + "{0:.1f}%".format(value/total_votes * 100) + 
+         " (" + str(value) + ")")
+print ("\n------------------------------------------------\n")
+print ("Winner: " + max(candidates, key=candidates.get) ) 
+print ("\n--------------------------------------------------")                                                       
+
+output_path = os.path.join('Resources', 'Election_results_2.txt')
+
+with open(output_path, 'w') as txt:
+
+  txt.write ("Election Resuls\n")
+  txt.write ("-----------------------------------------------\n")
+  txt.write("Total Votes: " + str(total_votes) + '\n')
+  txt.write ("\n---------------------------------------------\n")
+
+  for key, value in candidates.items():
+
+    txt.write(key + ": " + "{0:.1f}%".format(value/total_votes * 100) + 
+            " (" + str(value) + ")\n")
+  txt.write ("\n----------------------------------------------\n")
+  txt.write("Winner: " + max(candidates, key=candidates.get) ) 
+  txt.write ("\n---------------------------------------------")
+
+    #Refrences and resources used 
+    #https://docs.python.org/2/library/csv.html
+    ##http://infohost.nmt.edu/tcc/help/pubs/lang/pytut27/web/str-format.html
+    #https://stackoverflow.com/questions/17262256/how-to-read-one-single-line-of-csv-data-in-python
+    #https://www.geeksforgeeks.org/python-dictionary-keys-method/
+    #May02 In class activites:
+    #Stu_Read_Netflix
+    #ReadCSV
+    #Simpleloops
+    #May04 In class Activities:
+    #StuCerealCleaner
+    #wrestlingfunctions
